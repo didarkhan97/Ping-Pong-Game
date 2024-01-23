@@ -23,6 +23,5 @@ This is a simple Ping Pong game I created using HTML, CSS, and Javascript. It's 
 4. Enjoy the game!
 
 ## Wireframe
-- https://whimsical.com/GJMhMC7qgkBBcuJC2mqvhC   
 
-
+![Ping Pong Game Blueprint](./Ping-Pong-Wireframe.png)

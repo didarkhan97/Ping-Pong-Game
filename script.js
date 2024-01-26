@@ -33,6 +33,9 @@ const keysState = {
     w: false,
     s: false,
   };
+
+// Game loop
+let gameRunning = false;  // this variable tracks whether the game is running
   
 
 // Defining the ball properties
@@ -55,11 +58,18 @@ const winningScore = 5;
 
 
 // 2. Drawing the game state
+
 function draw() {
+  if (!gameRunning) {
+    console.log('Draw was called while game not running');
+    return
+  }
+
+  console.log('Drawing a frame');
   // Clearing the canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // The center dotted line (TABLE NET)
+  // Drawing The center dotted line (TABLE NET)
   ctx.beginPath();
   ctx.setLineDash([5, 15]); // Set the line dashes
   ctx.moveTo(canvas.width / 2, 0);
@@ -82,12 +92,16 @@ function draw() {
   ctx.fill();
   ctx.closePath();
 
-
   // Drawing the score
   ctx.font = '20px Arial';
   ctx.fillStyle = 'white';
-  ctx.fillText(`Left: ${leftScore}  Right: ${rightScore}`, canvas.width / 2 - 60, 20);
+  ctx.textAlign = 'left'; // Align text to the left for the left score
+  ctx.fillText(`Left: ${leftScore}`, 10, 20); // Positioning it a bit away from the edge
+ 
+  ctx.textAlign = 'right'; // Align text to the right for the right score
+  ctx.fillText(`Right: ${rightScore}`, canvas.width - 10, 20); // Positioning it a bit away from the right edge
 }
+
 
 // Calling the draw function to initially render the game state
 draw();
@@ -98,6 +112,7 @@ document.addEventListener('keydown', handleKeyDown);
 document.addEventListener('keyup', handleKeyUp);
 
 function handleKeyDown(event) {
+  console.log('Key down event: ', event.key);
   switch (event.key) {
     case 'ArrowUp':
       rightPaddle.y -= rightPaddle.dy;
@@ -176,26 +191,53 @@ function resetBall() {
   ball.y = canvas.height / 2;
 }
 
-// Game loop
-let gameRunning = false;  // this variable tracks whether the game is running
+
 
 function gameLoop() {
     if (gameRunning) {
       updateBallPosition();
       draw();
       requestAnimationFrame(gameLoop);
+    } else {
+      console.log('Game loop terminated');
     }
   }
   
 // 5. Implementing the game logic
+
 // Function to check for a winner
 function checkWinner() {
   if (leftScore >= winningScore || rightScore >= winningScore) {
-    alert(leftScore >= winningScore ? "Left Player wins!" : "Right Player wins!");
-    leftScore = 0;
-    rightScore = 0;
+    let winner = leftScore >= winningScore ? "Left" : "Right";
+    gameRunning = false; // Stop the game loop
+    showGameOverScreen(winner);
   }
 }
+
+
+// Game over function
+function showGameOverScreen(winner) {
+  console.log('Game Over');
+  // Clearing the canvas  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Setting the text style for "Game Over"    
+  ctx.font = '40px Arial';
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'center';
+
+  // Display "Game Over" text    
+  ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 20);
+
+  // Display who won the game    
+  ctx.font = '20px Arial';
+  ctx.fillText(winner + ' Player Wins!', canvas.width / 2, canvas.height / 2 + 20);
+
+  // Show the "Start Over" button
+  button.textContent = 'Start Over';
+  button.style.display = 'block';
+}
+
 
 // Function to reset paddles to initial positions
 function resetPaddlePositions() {
@@ -217,19 +259,23 @@ function handleGameControls(event) {
   }
 }
 
+
 function startGame() {
-    if (!gameRunning) {  // Only start the game if it's not already running
+  leftScore = 0;
+  rightScore = 0;
+  resetPaddlePositions();    resetBall();
+  if (!gameRunning) {
       gameRunning = true;
       gameLoop();
-    }
-    leftScore = 0;
-    rightScore = 0;
-    resetPaddlePositions();
-    resetBall();
-
-    // Hiding the "Start Game" button
-  button.style.display = 'none';
   }
+
+  // Hide the "Start Over" button
+  button.style.display = 'none';
+}
+
+
+
+
 
 // 7. Do the styling for the game
 

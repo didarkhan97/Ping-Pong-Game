@@ -223,14 +223,14 @@ function showGameOverScreen(winner) {
 
   // Setting the text style for "Game Over"    
   ctx.font = '40px Arial';
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = 'red';
   ctx.textAlign = 'center';
 
   // Display "Game Over" text    
   ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 20);
 
   // Display who won the game    
-  ctx.font = '20px Arial';
+  ctx.font = '40px Arial';
   ctx.fillText(winner + ' Player Wins!', canvas.width / 2, canvas.height / 2 + 20);
 
   // Show the "Start Over" button
@@ -272,68 +272,3 @@ function startGame() {
   // Hide the "Start Over" button
   button.style.display = 'none';
 }
-
-
-
-
-
-// 7. Do the styling for the game
-
-
-// 8. Work on PMVPs
-
-
-
-
-///////// --------------------------------------------------------------------------------------------------------------/////////
-
-
-
-/////////////---------------------------------------Original Steps and Ideas---------------------------------------////////////////
-
-
-// 1. Set Up Variables
-// Define - Canvas, Contex, Paddles, Ball, and Game State
-// Set initial positions for sizes and position for paddles and the ball
-
-
-
-// 2. Draw game state
-// Create function to draw paddles and ball in canvas
-// use 'fillRect' method to draw paddles, use 'arc' method to draw the ball
-
-
-// 3. Handle Paddle Movement
-// functions to handle paddle movement
-// event listeners to detect button presses for paddle movement
-// update paddle positions
-
-
-// 4. Update ball positions
-// make function to update ball position
-// update ball coordinates based on current speed and direction
-
-
-
-// 5. Collision Detection
-// check for wall collisions, paddle collisions, top and bottom wall collisions.
-// adjust ball directions after each collision
-
-
-
-// 6. Implement game logic
-// keep track of scores
-// reset the ball position after scoring
-// have winners and declare points of winning
-
-
-// 7. Add game controls
-// Start game control
-// Restart game 
-
-
-// 8. Do the styling for the game
-// Have a center dotted line that resembles a net
-
-
-// 9. Work on PMVPs
